@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package protos;
+option go_package = "micro-core/protos/pb";
+
+//protoc -I ../../ -I ./ --go_out=paths=source_relative:pb/  --micro_out=plugins=micro,paths=source_relative:pb/  *.proto
+//通用字段可以在这里定义
+
+//请求中的通用字段
+message RequestHeader {
+  //traceId
+  string traceId = 1;
+  //用户端IP
+  string clientIp = 2;
+  //客户端类型
+  string clientType = 3;
+  //其它信息。
+  string extend =4;
+}
+
+//响应中的通用字段
+message ResponseHeader {
+  //traceId
+  string traceId = 1;
+  //其它信息。
+  string extend =2;
+}
