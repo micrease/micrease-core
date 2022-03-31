@@ -3,7 +3,7 @@ package database
 import (
 	"github.com/jinzhu/gorm"
 	log "github.com/micro/go-micro/v2/logger"
-	"micro-core/config"
+	"micrease-core/config"
 	"time"
 )
 

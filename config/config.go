@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"gopkg.in/ini.v1"
-	_map "micro-core/map"
+	_map "micrease-core/map"
 	"sync"
 )
 

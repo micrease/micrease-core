@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package protos;
-option go_package = "micro-core/protos/pb";
+option go_package = "micrease-core/protos/pb";
 
 //protoc -I ../../ -I ./ --go_out=paths=source_relative:pb/  --micro_out=plugins=micro,paths=source_relative:pb/  *.proto
 //通用字段可以在这里定义

@@ -1,4 +1,4 @@
-module micro-core
+module micrease-core
 
 go 1.16
 

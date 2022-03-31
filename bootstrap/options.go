@@ -2,8 +2,8 @@ package bootstrap
 
 import (
 	"github.com/micro/go-micro/v2"
-	"micro-core/config"
-	"micro-core/database"
+	"micrease-core/config"
+	"micrease-core/database"
 )
 
 const (

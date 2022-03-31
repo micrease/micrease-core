@@ -3,7 +3,7 @@ package rpc
 import (
 	"fmt"
 	"github.com/micro/go-micro/v2/errors"
-	"micro-core/errs"
+	"micrease-core/errs"
 	"runtime"
 )
 
