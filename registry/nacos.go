@@ -3,20 +3,16 @@ package nacos
 import (
 	"context"
 	"errors"
+	"github.com/micro/go-micro/v2/config/cmd"
+	"github.com/micro/go-micro/v2/registry"
+	mnet "github.com/micro/go-micro/v2/util/net"
+	"github.com/nacos-group/nacos-sdk-go/clients"
+	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
+	"github.com/nacos-group/nacos-sdk-go/common/constant"
+	"github.com/nacos-group/nacos-sdk-go/vo"
 	"net"
 	"strconv"
 	"time"
-
-	"github.com/nacos-group/nacos-sdk-go/vo"
-
-	"github.com/nacos-group/nacos-sdk-go/clients"
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-
-	mnet "github.com/micro/go-micro/v2/util/net"
-	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
-
-	"github.com/micro/go-micro/v2/config/cmd"
-	"github.com/micro/go-micro/v2/registry"
 )
 
 type nacosRegistry struct {

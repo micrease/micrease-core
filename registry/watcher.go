@@ -1,27 +1,20 @@
 package nacos
 
 import (
-	reflect "reflect"
-	"sync"
-
-	mnet "github.com/micro/go-micro/v2/util/net"
-
 	"github.com/micro/go-micro/v2/logger"
-
-	"github.com/nacos-group/nacos-sdk-go/model"
-
-	"github.com/nacos-group/nacos-sdk-go/vo"
-
 	"github.com/micro/go-micro/v2/registry"
+	mnet "github.com/micro/go-micro/v2/util/net"
+	"github.com/nacos-group/nacos-sdk-go/model"
+	"github.com/nacos-group/nacos-sdk-go/vo"
+	"reflect"
+	"sync"
 )
 
 type nacosWatcher struct {
-	nr *nacosRegistry
-	wo registry.WatchOptions
-
+	nr   *nacosRegistry
+	wo   registry.WatchOptions
 	next chan *registry.Result
 	exit chan bool
-
 	sync.RWMutex
 	services      map[string][]*registry.Service
 	cacheServices map[string][]model.SubscribeService

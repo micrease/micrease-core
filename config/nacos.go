@@ -76,10 +76,8 @@ func NewClientConfig(nacos NacosSection) constant.ClientConfig {
 		constant.WithNamespaceId(nacos.NamespaceId), //当namespace是public时，此处填空字符串。
 		constant.WithTimeoutMs(5000),
 		constant.WithNotLoadCacheAtStart(true),
-		//constant.WithLogDir("./nacos/log"),
-		//constant.WithCacheDir("./nacos/cache"),
-		//constant.WithRotateTime("1h"),
-		//constant.WithMaxAge(3),
+		constant.WithCacheDir("./runtime/cache"),
+		constant.WithLogDir("./runtime/log"),
 		constant.WithLogLevel("debug"),
 	)
 	return clientConfig
