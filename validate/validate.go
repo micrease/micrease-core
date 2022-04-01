@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	errs "micrease-core/errs"
+	"github.com/micrease/micrease-core/errs"
 	"reflect"
 )
 

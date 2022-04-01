@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
+	_map "github.com/micrease/micrease-core/map"
 	"gopkg.in/ini.v1"
-	_map "micrease-core/map"
 	"sync"
 )
 

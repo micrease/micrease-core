@@ -1,9 +1,8 @@
 package bootstrap
 
 import (
+	"github.com/micrease/micrease-core/database"
 	"github.com/micro/go-micro/v2"
-	"micrease-core/config"
-	"micrease-core/database"
 )
 
 const (
@@ -16,7 +15,7 @@ type Options struct {
 	ServiceType string
 	Orm         database.Orm
 	Service     micro.Service
-	Config      config.Config
+	//Config      config.Config
 }
 type Option func(*Options)
 
@@ -56,8 +55,10 @@ func Service(service micro.Service) Option {
 	}
 }
 
+/*
 func Config(config config.Config) Option {
 	return func(o *Options) {
 		o.Config = config
 	}
 }
+*/

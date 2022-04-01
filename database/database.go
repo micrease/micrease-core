@@ -2,8 +2,8 @@ package database
 
 import (
 	"github.com/jinzhu/gorm"
+	"github.com/micrease/micrease-core/config"
 	log "github.com/micro/go-micro/v2/logger"
-	"micrease-core/config"
 	"time"
 )
 
