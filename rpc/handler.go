@@ -1,7 +1,9 @@
 package rpc
 
 import (
+	"context"
 	"fmt"
+	"github.com/jinzhu/gorm"
 	"github.com/micrease/micrease-core/errs"
 	"github.com/micro/go-micro/v2/errors"
 	"runtime"
@@ -11,7 +13,8 @@ import (
  * Service中的一些公共方法
  */
 type ServiceHandler struct {
-	err error
+	Orm *gorm.DB
+	Ctx context.Context
 }
 
 /**
