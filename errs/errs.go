@@ -1,8 +1,10 @@
 package errs
 
 import (
+	"errors"
 	"fmt"
-	"github.com/micro/go-micro/v2/errors"
+	micro_errors "github.com/micro/go-micro/v2/errors"
+	"runtime"
 )
 
 //对异常处理进行封装
@@ -22,55 +24,73 @@ type Error struct {
 
 const (
 	//成功
-	StatusCodeSuccess = 200
+	StatusSuccess = 200
 	//参数错误4000+
-	StatusCodeParamError = 4000
+	StatusParamError = 4000
 	//服务器错误5000+
-	StatusCodeServerError = 5000
+	StatusServerError = 5000
 )
 
-func NewError() *Error {
-	return &Error{}
-}
-
-//RPC返回的error, error.Error信息中是一个json字符串结构，因此和常规error不一样的
-func PanicIfRpcError(err error) {
-	if err == nil {
-		return
+func (c *Error) Err(code int32, message string, err error) error {
+	traceInfo := c.traceInfo()
+	var errMsg string
+	if err != nil {
+		errMsg = err.Error()
 	}
-	rpcError := errors.Parse(err.Error())
-	msg := fmt.Sprintf("%s%s%s", rpcError.Id, ERR_DS, rpcError.Detail)
-	panic(msg)
+	detail := fmt.Sprintf("%s%s%s%s%s", message, ERR_DS, errMsg, ERR_DS, traceInfo)
+	//e := micro_errors.New("", detail, code)
+	e := micro_errors.InternalServerError(fmt.Sprint(code), detail)
+	return e
 }
 
-func PanicIfParamError(err error) {
-	PanicIfError(err, StatusCodeParamError, err.Error())
-}
-
-func PanicIfServerError(err error) {
-	PanicIfError(err, StatusCodeServerError, err.Error())
-}
-
-//如果错误抛出信息
-func PanicIfError(err error, code int, message string) {
-	if err == nil {
-		return
+//参数只接受bool和error类型
+//如果real为true或error!=nil时panic
+func (c *Error) PanicIf(real interface{}, code int32, message string) {
+	switch real.(type) {
+	case error:
+		e := real.(error)
+		if e != nil {
+			panic(c.Err(code, message, e))
+		}
+	case bool:
+		b := real.(bool)
+		if b {
+			panic(c.Err(code, message, nil))
+		}
 	}
-	msg := fmt.Sprintf("%d%s%s", code, ERR_DS, message)
-	panic(msg)
 }
 
-//如果条件不成立抛出信息
-func PanicIfFalse(ok bool, code int, message string) {
-	if ok {
-		return
+//可以使用如下方式抛出异常
+//panic("查询商品列表失败")
+//panic(err)
+//PanicIf(err, 5001, "查询商品列表失败")
+func (c *Error) Recover(err *error) {
+	if e := recover(); e != nil {
+		//断言比反射要快很多
+		me, ok := e.(*micro_errors.Error)
+		if ok {
+			*err = fmt.Errorf("%v", me)
+			return
+		}
+
+		er, ok := e.(error)
+		if ok {
+			*err = c.Err(StatusServerError, er.Error(), er)
+			return
+		}
+
+		str, ok := e.(string)
+		if ok {
+			*err = c.Err(StatusServerError, str, errors.New(str))
+			return
+		}
+		*err = c.Err(StatusServerError, "服务器错误", errors.New("unkonw error"))
 	}
-	msg := fmt.Sprintf("%d%s%s", code, ERR_DS, message)
-	panic(msg)
 }
 
-//抛出信息
-func PanicMessage(code int, message string) {
-	msg := fmt.Sprintf("%d%s%s", code, ERR_DS, message)
-	panic(msg)
+func (m *Error) traceInfo() string {
+	pc, file, line, _ := runtime.Caller(3)
+	pcName := runtime.FuncForPC(pc).Name() //获取函数名
+	traceInfo := fmt.Sprintf("in file:%s,at line:%d,%s", file, line, pcName)
+	return traceInfo
 }
