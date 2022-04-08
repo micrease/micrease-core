@@ -6,18 +6,18 @@ import (
 	"github.com/micrease/micrease-core/errs"
 )
 
-type GinHandler struct {
+type Handler struct {
 	errs.Error
 }
 
-func (h GinHandler) ResponseData(ctx *context.Context, data interface{}) {
+func (h Handler) ResponseData(ctx *context.Context, data interface{}) {
 	ctx.GinCtx.JSON(200, gin.H{"status": errs.StatusSuccess, "message": "操作成功", "data": data})
 }
 
-func (h GinHandler) Success(ctx *context.Context) {
+func (h Handler) Success(ctx *context.Context) {
 	ctx.GinCtx.JSON(200, gin.H{"status": errs.StatusSuccess, "message": "操作成功", "data": ""})
 }
 
-func (h GinHandler) Response(ctx *context.Context, data interface{}) {
+func (h Handler) Response(ctx *context.Context, data interface{}) {
 	h.ResponseData(ctx, data)
 }
