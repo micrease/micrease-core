@@ -58,6 +58,17 @@ func getNodeIpPort(s *registry.Service) (host string, port int, err error) {
 	return
 }
 
+func NewClientConfig() constant.ClientConfig {
+	clientConfig := *constant.NewClientConfig(
+		constant.WithTimeoutMs(5000),
+		constant.WithNotLoadCacheAtStart(true),
+		constant.WithCacheDir("./runtime/cache"),
+		constant.WithLogDir("./runtime/log"),
+		constant.WithLogLevel("debug"),
+	)
+	return clientConfig
+}
+
 func configure(c *nacosRegistry, opts ...registry.Option) error {
 	// set opts
 	for _, o := range opts {
@@ -69,7 +80,7 @@ func configure(c *nacosRegistry, opts ...registry.Option) error {
 			return nil
 		}
 	}
-	clientConfig := constant.ClientConfig{}
+	clientConfig := NewClientConfig()
 	serverConfigs := make([]constant.ServerConfig, 0)
 	contextPath := "/nacos"
 	// iterate the options addresses
