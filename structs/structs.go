@@ -5,8 +5,8 @@ import (
 	"reflect"
 )
 
-//CopyProperties copy the exported value of a struct to a likely struct , with reflect.
-func CopyProperties(src, dst interface{}) error {
+//copy the exported value of a struct to a likely struct , with reflect.
+func Copy(src, dst interface{}) error {
 	srcV, err := srcFilter(src)
 	if err != nil {
 		return err
