@@ -31,8 +31,8 @@ const (
 	StatusServerError = 5000
 )
 
-func (c *Error) Err(code int32, message string, err error) error {
-	traceInfo := c.traceInfo()
+func Err(code int32, message string, err error) error {
+	traceInfo := traceInfo()
 	var errMsg string
 	if err != nil {
 		errMsg = err.Error()
@@ -45,17 +45,17 @@ func (c *Error) Err(code int32, message string, err error) error {
 
 //参数只接受bool和error类型
 //如果real为true或error!=nil时panic
-func (c *Error) PanicIf(real interface{}, code int32, message string) {
+func PanicIf(real interface{}, code int32, message string) {
 	switch real.(type) {
 	case error:
 		e := real.(error)
 		if e != nil {
-			panic(c.Err(code, message, e))
+			panic(Err(code, message, e))
 		}
 	case bool:
 		b := real.(bool)
 		if b {
-			panic(c.Err(code, message, nil))
+			panic(Err(code, message, nil))
 		}
 	}
 }
@@ -64,7 +64,7 @@ func (c *Error) PanicIf(real interface{}, code int32, message string) {
 //panic("查询商品列表失败")
 //panic(err)
 //PanicIf(err, 5001, "查询商品列表失败")
-func (c *Error) Recover(err *error) {
+func Recover(err *error) {
 	if e := recover(); e != nil {
 		//断言比反射要快很多
 		me, ok := e.(*micro_errors.Error)
@@ -75,20 +75,20 @@ func (c *Error) Recover(err *error) {
 
 		er, ok := e.(error)
 		if ok {
-			*err = c.Err(StatusServerError, er.Error(), er)
+			*err = Err(StatusServerError, er.Error(), er)
 			return
 		}
 
 		str, ok := e.(string)
 		if ok {
-			*err = c.Err(StatusServerError, str, errors.New(str))
+			*err = Err(StatusServerError, str, errors.New(str))
 			return
 		}
-		*err = c.Err(StatusServerError, "服务器错误", errors.New("unkonw error"))
+		*err = Err(StatusServerError, "服务器错误", errors.New("unkonw error"))
 	}
 }
 
-func (m *Error) traceInfo() string {
+func traceInfo() string {
 	pc, file, line, _ := runtime.Caller(3)
 	pcName := runtime.FuncForPC(pc).Name() //获取函数名
 	traceInfo := fmt.Sprintf("in file:%s,at line:%d,%s", file, line, pcName)
