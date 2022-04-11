@@ -27,6 +27,7 @@ type DatabaseSection struct {
 	MaxIdleConns   int32  `yaml:"max_idle_conns"`
 	MaxOpenConns   int32  `yaml:"max_open_conns"`
 	TablePrefix    string `yaml:"table_prefix"`
+	Debug          bool   `yaml:"debug"`
 }
 
 //DB配置项
