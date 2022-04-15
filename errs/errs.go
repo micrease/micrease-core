@@ -3,7 +3,7 @@ package errs
 import (
 	"errors"
 	"fmt"
-	micro_errors "github.com/micro/go-micro/v2/errors"
+	micro_errors "github.com/asim/go-micro/v3/errors"
 	"runtime"
 )
 

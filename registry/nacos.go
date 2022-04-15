@@ -3,9 +3,9 @@ package nacos
 import (
 	"context"
 	"errors"
-	"github.com/micro/go-micro/v2/config/cmd"
-	"github.com/micro/go-micro/v2/registry"
-	mnet "github.com/micro/go-micro/v2/util/net"
+	"github.com/asim/go-micro/v3/cmd"
+	"github.com/asim/go-micro/v3/registry"
+	mnet "github.com/asim/go-micro/v3/util/net"
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"

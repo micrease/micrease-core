@@ -3,8 +3,8 @@ package database
 import (
 	"encoding/json"
 	"fmt"
+	log "github.com/asim/go-micro/v3/logger"
 	"github.com/micrease/micrease-core/config"
-	log "github.com/micro/go-micro/v2/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

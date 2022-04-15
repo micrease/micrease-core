@@ -1,9 +1,9 @@
 package nacos
 
 import (
-	"github.com/micro/go-micro/v2/logger"
-	"github.com/micro/go-micro/v2/registry"
-	mnet "github.com/micro/go-micro/v2/util/net"
+	"github.com/asim/go-micro/v3/logger"
+	"github.com/asim/go-micro/v3/registry"
+	mnet "github.com/asim/go-micro/v3/util/net"
 	"github.com/nacos-group/nacos-sdk-go/model"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"reflect"

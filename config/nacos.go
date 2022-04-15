@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	log "github.com/micro/go-micro/v2/logger"
+	log "github.com/asim/go-micro/v3/logger"
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"

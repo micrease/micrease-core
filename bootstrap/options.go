@@ -1,8 +1,8 @@
 package bootstrap
 
 import (
+	"github.com/asim/go-micro/v3"
 	"github.com/micrease/micrease-core/database"
-	"github.com/micro/go-micro/v2"
 )
 
 const (

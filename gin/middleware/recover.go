@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"fmt"
+	micro_errors "github.com/asim/go-micro/v3/errors"
 	"github.com/gin-gonic/gin"
 	"github.com/micrease/micrease-core/errs"
 	"github.com/micrease/micrease-core/trace"
-	micro_errors "github.com/micro/go-micro/v2/errors"
 	"net/http"
 	"strconv"
 	"strings"
