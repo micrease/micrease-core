@@ -12,13 +12,14 @@ import (
 //2,尝试加载配置中心配置项,如果配置中心可用，则使用配置中心的配置
 
 var (
-	ResourcesPath = flag.String("resources", "./resources", "-config resources path")
+	ResourcesPath = flag.String("config", "./resources", "-config resources path")
 	Env           = flag.String("env", "dev", "-env:dev/test/uat/prod")
 )
 
 const (
 	//从配置中心加载配置,本地配置中至少需要nacos配置块
-	ConfigTypeNacos = "nacos"
+	ConfigTypeNacos  = "nacos"
+	ConfigTypeConsul = "consul"
 	//从配置文件加载
 	ConfigTypeLocal = "local"
 	//自动加载配置策略
@@ -32,37 +33,34 @@ func GetCommonConfig() *CommonConfig {
 }
 
 //1,加载配置到一个常规的配置结构体中
-func LoadConfig() *CommonConfig {
-	LoadConfigTo(commonConfig)
-	return commonConfig
+func LoadCommonConfig() *CommonConfig {
+	config, err := LoadConfig[CommonConfig]()
+	if err != nil {
+		panic(err)
+	}
+	return config
 }
 
 //2,加载配置到自定义的配置结构体中
-func LoadConfigTo(dest interface{}) error {
+func LoadConfig[T Config]() (*T, error) {
+	t := new(T)
 	//首先从本地加载commonConfig,获取nacos信息
 	err := LoadLocalConfigTo(commonConfig)
 	if err != nil {
-		return err
+		return t, err
 	}
 
-	if commonConfig.Service.ConfigType == ConfigTypeNacos && len(commonConfig.Nacos.Addrs) > 0 {
+	if commonConfig.Service.ConfigType == ConfigTypeConsul && len(commonConfig.Consul.Addrs) > 0 {
 		//从配置中心加载配置
-		content, err := LoadConfigContent(commonConfig.Nacos)
-		if err != nil {
-			return err
-		}
-
-		if err = yaml.Unmarshal([]byte(content), dest); err != nil {
-			return err
-		}
-		return nil
+		err := LoadConsulConfig(commonConfig.Consul, t)
+		return t, err
 	}
 
-	err = LoadLocalConfigTo(dest)
+	err = LoadLocalConfigTo(t)
 	if err != nil {
-		return err
+		return t, err
 	}
-	return nil
+	return t, nil
 }
 
 func LoadLocalConfigTo(dest interface{}) error {

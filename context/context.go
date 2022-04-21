@@ -10,6 +10,6 @@ import (
 type Context struct {
 	errs.Error //
 	Orm        *gorm.DB
-	Ctx        context.Context
-	GinCtx     *gin.Context
+	Ctx        context.Context //micro service上下文
+	GinCtx     *gin.Context    //gin路由上下文
 }
