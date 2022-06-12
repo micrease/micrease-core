@@ -2,12 +2,12 @@ package config
 
 import (
 	"fmt"
-	log "github.com/asim/go-micro/v3/logger"
 	"github.com/nacos-group/nacos-sdk-go/clients"
 	"github.com/nacos-group/nacos-sdk-go/clients/config_client"
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
+	log "go-micro.dev/v4/logger"
 	"io/ioutil"
 	"strconv"
 	"strings"
